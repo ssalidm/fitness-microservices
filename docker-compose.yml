@@ -1,23 +1,23 @@
 services:
   # Postgres
-#  postgres:
-#    image: postgres:18-alpine                                # alpine = smaller image, postgres 18 = latest stable
-#    container_name: fitness-userservice
-#    environment:
-#      POSTGRES_DB: ${USERSERVICE_POSTGRES_DB}                # default database — our public schema lives here
-#      POSTGRES_USER: ${USERSERVICE_POSTGRES_USER}            # superuser for local dev (use least-privilege in prod)
-#      POSTGRES_PASSWORD: ${USERSERVICE_POSTGRES_PASSWORD}    # local only — prod uses Railway secrets
-#    ports:
-#      - "5432:5432"                                          # expose to host so IntelliJ DB tools can connect
-#    volumes:
-#      - postgres_data:/var/lib/postgresql                    # persist data across container restarts
-#    healthcheck:
-#      test: ["CMD-SHELL", "pg_isready -U ${USERSERVICE_POSTGRES_USER} -d ${USERSERVICE_POSTGRES_DB}"]
-#      interval: 10s
-#      timeout: 5s
-#      retries: 5
-#    networks:
-#      - fitness_backend
+  postgres:
+    image: postgres:18-alpine                                # alpine = smaller image, postgres 18 = latest stable
+    container_name: fitness-userservice
+    environment:
+      POSTGRES_DB: ${USERSERVICE_POSTGRES_DB}                # default database — our public schema lives here
+      POSTGRES_USER: ${USERSERVICE_POSTGRES_USER}            # superuser for local dev (use least-privilege in prod)
+      POSTGRES_PASSWORD: ${USERSERVICE_POSTGRES_PASSWORD}    # local only — prod uses Railway secrets
+    ports:
+      - "5432:5432"                                          # expose to host so IntelliJ DB tools can connect
+    volumes:
+      - postgres_data:/var/lib/postgresql                    # persist data across container restarts
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${USERSERVICE_POSTGRES_USER} -d ${USERSERVICE_POSTGRES_DB}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - fitness_backend
 
   # Mongo
   mongo:
@@ -33,7 +33,11 @@ services:
     volumes:
       - mongo_data:/data/db
     healthcheck:
-      test: echo 'db.runCommand("ping").ok | mongosh localhost:27017/test --quiet
+      test:
+        [
+          "CMD-SHELL",
+          "echo 'db.runCommand(\"ping\").ok' | mongosh mongodb://${ACTIVITYSERVICE_MONGO_USER}:${ACTIVITYSERVICE_MONGO_PASSWORD}@localhost:27017/admin --quiet"
+        ]
       interval: 10s
       timeout: 5s
       retries: 5
@@ -41,7 +45,7 @@ services:
       - fitness_backend
 
 volumes:
-#  postgres_data:
+  postgres_data:
   mongo_data:
 networks:
   fitness_backend:

@@ -1,6 +1,6 @@
 package com.fitness.userservice.controller;
 
-import com.fitness.userservice.common.dto.ApiResponse;
+import com.fitness.userservice.dto.ApiResponse;
 import com.fitness.userservice.dto.RegisterRequest;
 import com.fitness.userservice.dto.UserResponse;
 import com.fitness.userservice.service.UserService;

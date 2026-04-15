@@ -1,4 +1,4 @@
-package com.fitness.userservice.common.dto;
+package com.fitness.activityservice.dto;
 
 
 import com.fasterxml.jackson.annotation.JsonInclude;
