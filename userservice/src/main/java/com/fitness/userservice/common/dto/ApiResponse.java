@@ -55,4 +55,15 @@ public class ApiResponse<T> {
                 .path(path)
                 .build();
     }
+
+    public static ApiResponse<Void> validationError(
+            Map<String, String> errors, String path) {
+        return ApiResponse.<Void>builder()
+                .success(false)
+                .status(HttpStatus.BAD_REQUEST.value())
+                .message("Validation failed")
+                .errors(errors)
+                .path(path)
+                .build();
+    }
 }

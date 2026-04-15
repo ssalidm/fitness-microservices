@@ -1,0 +1,6 @@
+spring:
+  application:
+    name: activityservice
+  data:
+    mongodb:
+      uri: mongodb://${ACTIVITYSERVICE_MONGO_USER}:${ACTIVITYSERVICE_MONGO_PASSWORD}localhost/27017/${ACTIVITYSERVICE_MONGO_DB}?authSource=admin
