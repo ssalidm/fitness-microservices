@@ -1,6 +1,6 @@
 package com.fitness.userservice.controller;
 
-import com.fitness.userservice.dto.ApiResponse;
+import com.fitness.common.dto.ApiResponse;
 import com.fitness.userservice.dto.RegisterRequest;
 import com.fitness.userservice.dto.UserResponse;
 import com.fitness.userservice.service.UserService;
@@ -32,5 +32,10 @@ public class UserController {
                 "User registration successful",
                 HttpStatus.CREATED.value()
         ));
+    }
+
+    @GetMapping("/{userId}/validate")
+    public ResponseEntity<Boolean> validateUser(@PathVariable String userId) {
+        return ResponseEntity.ok(userService.existsByUserId(userId));
     }
 }

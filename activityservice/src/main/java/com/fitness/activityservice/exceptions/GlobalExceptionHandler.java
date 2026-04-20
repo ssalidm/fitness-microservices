@@ -1,7 +1,7 @@
 package com.fitness.activityservice.exceptions;
 
 
-import com.fitness.activityservice.dto.ApiResponse;
+import com.fitness.common.dto.ApiResponse;
 import jakarta.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

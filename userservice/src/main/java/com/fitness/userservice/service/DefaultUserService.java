@@ -10,7 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
-public class UserServiceImpl implements UserService {
+public class DefaultUserService implements UserService {
 
     private final UserRepository userRepository;
 
@@ -31,6 +31,11 @@ public class UserServiceImpl implements UserService {
         User user = userRepository.findById(userId).orElseThrow(
                 () -> new IllegalArgumentException("User not found"));
         return UserResponse.from(user);
+    }
+
+    @Override
+    public Boolean existsByUserId(String userId) {
+        return userRepository.existsById(userId);
     }
 
     private static User toEntity(RegisterRequest request) {

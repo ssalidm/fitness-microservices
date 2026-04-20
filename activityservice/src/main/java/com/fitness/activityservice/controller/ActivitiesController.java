@@ -2,7 +2,7 @@ package com.fitness.activityservice.controller;
 
 import com.fitness.activityservice.dto.ActivityRequest;
 import com.fitness.activityservice.dto.ActivityResponse;
-import com.fitness.activityservice.dto.ApiResponse;
+import com.fitness.common.dto.ApiResponse;
 import com.fitness.activityservice.service.ActivityService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;

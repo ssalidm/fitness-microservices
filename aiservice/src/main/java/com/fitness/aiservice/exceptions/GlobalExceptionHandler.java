@@ -1,4 +1,4 @@
-package com.fitness.userservice.exceptions;
+package com.fitness.aiservice.exceptions;
 
 
 import com.fitness.common.dto.ApiResponse;
