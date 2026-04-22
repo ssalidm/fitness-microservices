@@ -8,6 +8,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
 import java.time.Instant;
+import java.time.LocalDateTime;
 import java.util.Map;
 
 @Document(collection = "activities")
@@ -23,7 +24,7 @@ public class Activity {
     private ActivityType type;
     private Integer duration;
     private Integer caloriesBurned;
-    private Instant startTime;
+    private LocalDateTime startTime;
 
     @Field("metrics")
     private Map<String, Object> additionalMetrics;

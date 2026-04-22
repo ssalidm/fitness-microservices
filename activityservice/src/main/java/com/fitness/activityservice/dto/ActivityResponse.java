@@ -4,6 +4,7 @@ import com.fitness.activityservice.model.Activity;
 import com.fitness.activityservice.model.ActivityType;
 
 import java.time.Instant;
+import java.time.LocalDateTime;
 import java.util.Map;
 
 public record ActivityResponse(
@@ -12,7 +13,7 @@ public record ActivityResponse(
         ActivityType type,
         Integer duration,
         Integer caloriesBurned,
-        Instant startTime,
+        LocalDateTime startTime,
         Map<String, Object> additionalMetrics,
         Instant createdAt,
         Instant updatedAt

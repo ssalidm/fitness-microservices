@@ -1,0 +1,27 @@
+spring:
+  data:
+    mongodb:
+      uri: mongodb://${ACTIVITYSERVICE_MONGO_USER}:${ACTIVITYSERVICE_MONGO_PASSWORD}@localhost:27017/${ACTIVITYSERVICE_MONGO_DB}?authSource=admin
+
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: ${RABBITMQ_DEFAULT_USER}
+    password: ${RABBITMQ_DEFAULT_PASS}
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+
+app:
+  rabbitmq:
+    exchange:
+      name: fitness.exchange
+    queue:
+      name: activity.queue
+    routing:
+      key: activity.tracking
+
+server:
+  port: 8082

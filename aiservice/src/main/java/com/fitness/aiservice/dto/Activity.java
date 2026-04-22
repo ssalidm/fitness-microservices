@@ -1,6 +1,7 @@
 package com.fitness.aiservice.dto;
 
 
+import java.time.Instant;
 import java.time.LocalDateTime;
 import java.util.Map;
 
@@ -12,6 +13,6 @@ public record Activity(
         Integer caloriesBurned,
         LocalDateTime startTime,
         Map<String, Object> additionalMetrics,
-        LocalDateTime createdAt,
-        LocalDateTime updatedAt
+        Instant createdAt,
+        Instant updatedAt
 ) {}
