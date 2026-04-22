@@ -1,3 +1,6 @@
+server:
+  port: 8083
+
 spring:
   application:
     name: ai-service
@@ -25,5 +28,7 @@ app:
     routing:
       key: activity.tracking
 
-server:
-  port: 8083
+gemini:
+  api:
+    url: https://generativelanguage.googleapis.com/v1beta/models/gemini-flash-lite-latest:generateContent
+    key: ${GEMINI_API_KEY}

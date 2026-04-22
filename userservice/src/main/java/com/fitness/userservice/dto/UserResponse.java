@@ -4,7 +4,7 @@ package com.fitness.userservice.dto;
 import com.fitness.userservice.model.User;
 import com.fitness.userservice.model.UserRole;
 
-import java.time.LocalDateTime;
+import java.time.Instant;
 
 public record UserResponse(
         String id,
@@ -12,8 +12,8 @@ public record UserResponse(
         String firstName,
         String lastName,
         UserRole role,
-        LocalDateTime createdAt,
-        LocalDateTime updatedAt
+        Instant createdAt,
+        Instant updatedAt
 ) {
     public static UserResponse from(User user) {
         return new UserResponse(

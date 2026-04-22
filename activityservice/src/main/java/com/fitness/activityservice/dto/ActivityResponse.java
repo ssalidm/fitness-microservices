@@ -3,7 +3,7 @@ package com.fitness.activityservice.dto;
 import com.fitness.activityservice.model.Activity;
 import com.fitness.activityservice.model.ActivityType;
 
-import java.time.LocalDateTime;
+import java.time.Instant;
 import java.util.Map;
 
 public record ActivityResponse(
@@ -12,10 +12,10 @@ public record ActivityResponse(
         ActivityType type,
         Integer duration,
         Integer caloriesBurned,
-        LocalDateTime startTime,
+        Instant startTime,
         Map<String, Object> additionalMetrics,
-        LocalDateTime createdAt,
-        LocalDateTime updatedAt
+        Instant createdAt,
+        Instant updatedAt
 ) {
     public static ActivityResponse from(Activity activity) {
         return new ActivityResponse(

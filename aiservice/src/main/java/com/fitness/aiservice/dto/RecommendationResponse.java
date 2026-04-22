@@ -2,7 +2,7 @@ package com.fitness.aiservice.dto;
 
 import com.fitness.aiservice.model.Recommendation;
 
-import java.time.LocalDateTime;
+import java.time.Instant;
 import java.util.List;
 
 public record RecommendationResponse(
@@ -14,7 +14,7 @@ public record RecommendationResponse(
         List<String> improvements,
         List<String> suggestions,
         List<String> safety,
-        LocalDateTime createdAt
+        Instant createdAt
 ) {
     public static RecommendationResponse from(Recommendation recommendation) {
         return new RecommendationResponse(

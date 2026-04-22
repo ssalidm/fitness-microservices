@@ -18,6 +18,7 @@ public class RabbitMqConfig {
     public static String ACTIVITY_EXCHANGE;
     public static String ACTIVITY_ROUTING_KEY;
 
+    // ***** Setters needed for static fields *****
     @Value("${app.rabbitmq.queue.name}")
     public void setActivityQueue(String activityQueue) {
         ACTIVITY_QUEUE = activityQueue;
@@ -32,7 +33,6 @@ public class RabbitMqConfig {
     public void setActivityRoutingKey(String activityRoutingKey) {
         ACTIVITY_ROUTING_KEY = activityRoutingKey;
     }
-
 
     @Bean
     public Queue activityQueue() {
