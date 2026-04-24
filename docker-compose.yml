@@ -1,8 +1,8 @@
 services:
-  # Postgres
+  # Users-DB
   postgres:
     image: postgres:18-alpine                                # alpine = smaller image, postgres 18 = latest stable
-    container_name: fitness-userservice
+    container_name: fitness-user-service-db
     environment:
       POSTGRES_DB: ${USERSERVICE_POSTGRES_DB}                # default database — our public schema lives here
       POSTGRES_USER: ${USERSERVICE_POSTGRES_USER}            # superuser for local dev (use least-privilege in prod)
@@ -19,11 +19,11 @@ services:
     networks:
       - fitness_backend
 
-  # Mongo
+  # Activity-DB
   mongo:
     image: mongo:8
     restart: unless-stopped
-    container_name: fitness-activityservice
+    container_name: fitness-activity-service-db
     environment:
       MONGO_INITDB_DATABASE: ${ACTIVITYSERVICE_MONGO_DB}
       MONGO_INITDB_ROOT_USERNAME: ${ACTIVITYSERVICE_MONGO_USER}
@@ -62,8 +62,59 @@ services:
     networks:
       - fitness_backend
 
+  # Keycloak-DB
+  keycloak-db:
+    image: postgres:18-alpine
+    container_name: keycloak-db
+    environment:
+      POSTGRES_DB: ${KC_POSTGRES_DB}
+      POSTGRES_USER: ${KC_POSTGRES_USER}
+      POSTGRES_PASSWORD: ${KC_POSTGRES_PASSWORD}
+    volumes:
+      - keycloak_data:/var/lib/postgresql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${KC_POSTGRES_USER} -d ${KC_POSTGRES_DB}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - fitness_backend
+
+  # Keycloak
+  keycloak:
+    image: quay.io/keycloak/keycloak:26.6.1
+    container_name: keycloak
+    command: start-dev
+    environment:
+      KC_DB: postgres
+      KC_DB_URL: jdbc:postgresql://keycloak-db:5432/${KC_POSTGRES_DB}
+      KC_DB_USERNAME: ${KC_POSTGRES_USER}
+      KC_DB_PASSWORD: ${KC_POSTGRES_PASSWORD}
+
+      KEYCLOAK_ADMIN: ${KC_ADMIN}
+      KEYCLOAK_ADMIN_PASSWORD: ${KC_ADMIN_PASSWORD}
+
+      KC_HEALTH_ENABLED: true       # /health, /health/live, /health/ready
+      KC_METRICS_ENABLED: true
+
+      KC_HOSTNAME: localhost
+      KC_HTTP_ENABLED: true
+    ports:
+      - "8181:8080"
+    depends_on:
+      keycloak-db:
+        condition: service_healthy
+#    healthcheck:
+#      test: ["CMD", "curl", "-f", "http://localhost:8080/health/ready"]
+#      interval: 10s
+#      timeout: 5s
+#      retries: 5
+    networks:
+      - fitness_backend
+
 volumes:
   postgres_data:
   mongo_data:
+  keycloak_data:
 networks:
   fitness_backend:
